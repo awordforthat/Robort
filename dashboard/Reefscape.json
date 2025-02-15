@@ -35,11 +35,57 @@
         }
       },
       "teleop": {
-        "groundPickupButton1": { "id": "groundPickupButton1", "top": "50px", "left": "230px", "width": "200px", "height": "120px" },
-        "groundPickupButton2": { "id": "groundPickupButton2", "top": "195px", "left": "230px", "width": "200px", "height": "120px" },
-        "groundPickupButton3": { "id": "groundPickupButton3", "top": "340px", "left": "230px", "width": "200px", "height": "120px" },
-        "sourceButton":         { "id": "sourceButton", "top": "50px", "left": "10px",  "width": "200px", "height": "195px" },
-        "sourceButton2":        { "id": "sourceButton2", "top": "265px", "left": "10px",  "width": "200px", "height": "195px" }
+        "groundPickupButton1": {
+          "id": "groundPickupButton1",
+          "top": "50px",
+          "left": "230px",
+          "width": "200px",
+          "height": "120px",
+          "name": "Ground Pickup 1",
+          "color": "green",
+          "size": "large"
+        },
+      "groundPickupButton2": {
+    "id": "groundPickupButton2",
+    "top": "195px",
+    "left": "230px",
+    "width": "200px",
+    "height": "120px",
+    "name": "Ground Pickup 2",
+    "color": "green",
+    "size": "large"
+  },
+  "groundPickupButton3": {
+    "id": "groundPickupButton3",
+    "top": "340px",
+    "left": "230px",
+    "width": "200px",
+    "height": "120px",
+    "name": "Ground Pickup 3",
+    "color": "green",
+    "size": "large"
+  },
+ 
+  "sourceButton": {
+    "id": "sourceButton",
+    "top": "50px",
+    "left": "10px",
+    "width": "200px",
+    "height": "195px",
+    "name": "Source BLUE",
+    "color": "blue",
+    "size": "large"
+  },
+  "sourceButton2": {
+    "id": "sourceButton2",
+    "top": "265px",
+    "left": "10px",
+    "width": "200px",
+    "height": "195px",
+    "name": "Source RED",
+    "color": "red",
+    "size": "large"
+  }
       },
       "endgame": {
         "StageRightBLUE": { "id": "StageRightBLUE", "top": "470px", "left": "20px", "width": "200px", "height": "200px" },

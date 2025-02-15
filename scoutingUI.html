@@ -412,25 +412,8 @@
 
 
     <div id="teleopContainer" style="display: none; position: absolute; width: 100%; ">
-        <button id="groundPickupButton1" class="groundPickupButton"
-            style="font-size:20px; background-color:green; position:absolute;  width: 200px; height: 120px; opacity: 0.6;"
-            onclick="logAction('Ground Pickup 1')">Ground Pickup 1</button>
-
-        <button id="groundPickupButton2" class="groundPickupButton"
-            style="font-size:20px; background-color:green; position:absolute; width: 200px; height: 120px; opacity: 0.6;"
-            onclick="logAction('Ground Pickup 2')">Ground Pickup 2</button>
-
-        <button id="groundPickupButton3" class="groundPickupButton"
-            style="font-size:20px; background-color:green; position:absolute; width: 200px; height: 120px; opacity: 0.6;"
-            onclick="logAction('Ground Pickup 3')">Ground Pickup 3</button>
-
-        <button id="sourceButton"
-            style="font-size:30px;  position:absolute; opacity: 0.6;"
-            onclick="logAction('Source BLUE')">Source</button>
-        <button id="sourceButton2"
-            style=" font-size:30px; background-color:red; position:absolute; opacity: 0.6;"
-            onclick="logAction('Source RED')">Source</button>
-
+    
+        <div id="teleopButtons"></div>
         <div id="additionalActions" style="display: none;">
             <button id="speaker" style="font-size:30px; position:absolute;  opacity: 0.6;"
                 onclick="logAction('Speaker')">Speaker</button>
@@ -443,14 +426,14 @@
         </div>
 
         <div id="endgameContainer" style="display: none; text-align: center;">
-            <button id="StageRightBLUE" style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Stage Right BLUE')">Stage Right</button>
+            <!-- <button id="StageRightBLUE" style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Stage Right BLUE')">Stage Right</button>
             <button id="StageLeftBLUE"style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Stage Left BLUE')">Stage Left</button>
             <button id="CenterStageBLUE"style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Center Stage BLUE')">Center Stage</button>
             <button id="None"style="font-size:20px; background-color:green; position:absolute; opacity: 0.6;" onclick="logEndgameAction('None')">None</button>
 
             <button id="StageRightRED" style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Stage Right RED')">Stage Right</button>
             <button id="StageLeftRED" style="font-size:20px; position:absolute; opacity: 0.6;" onclick="logEndgameAction('Stage Left RED')">Stage Left</button>
-            <button id="CenterStageRED" style="font-size:20px; position:absolute;  opacity: 0.6;" onclick="logEndgameAction('Center Stage RED')">Center Stage</button>
+            <button id="CenterStageRED" style="font-size:20px; position:absolute;  opacity: 0.6;" onclick="logEndgameAction('Center Stage RED')">Center Stage</button> -->
 
             <div id="endgameOutcome" style="width:600px; position:absolute; top: 620px; left: 450px; display: none; text-align: center;">
                 <button style="background-color: blue;" onclick="saveEndgameOutcome('Park')">Park</button>
@@ -521,6 +504,7 @@ fieldIframe.addEventListener("load", function() {
         if (btnConfig.hide) {
             btnElem.style.display = 'none';
         }
+        
       }
 
       // Apply note button positions
@@ -558,39 +542,75 @@ fieldIframe.addEventListener("load", function() {
       }
       // Set Teleop button positions
       const teleopPositions = config.buttonPositions.teleop;
+      const teleopContainer = document.getElementById('teleopContainer');
+      const teleopButtonsContainer = document.getElementById('teleopButtons');
+// Clear only the teleop buttons container
+teleopButtonsContainer.innerHTML = '';
       for (let btnKey in teleopPositions) {
         const btnConfig = teleopPositions[btnKey];
-        const btnElem = document.getElementById(btnConfig.id);
-        if (btnElem) {
-          btnElem.style.top = btnConfig.top;
-          btnElem.style.left = btnConfig.left;
-          btnElem.style.width = btnConfig.width;
-          btnElem.style.height = btnConfig.height;
-        }
+        // Create a new button element
+  const btn = document.createElement('button');
+  btn.id = btnConfig.id;
+       
+  btn.style.position = "absolute";
+          btn.style.top = btnConfig.top;
+          btn.style.left = btnConfig.left;
+          btn.style.width = btnConfig.width;
+          btn.style.height = btnConfig.height;
+        
         if (btnConfig.name) {
-            btnElem.innerText = btnConfig.name;
+            btn.innerText = btnConfig.name;
         }
+        if (btnConfig.color) {
+      btn.style.backgroundColor = btnConfig.color;
+    }
+    if (btnConfig.size) {
+      btn.style.fontSize = (btnConfig.size === "large") ? "30px" : "16px";
+    }
         if (btnConfig.hide) {
-            btnElem.style.display = 'none';
+            btn.style.display = 'none';
         }
+        btn.addEventListener('click', function() {
+        logAction(btnConfig.name || btnKey);
+      });
+      // Append the button to the teleop container
+      teleopContainer.appendChild(btn);
       }
       // Set Endgame button positions
       const endgamePositions = config.buttonPositions.endgame;
+      const endgameContainer = document.getElementById('endgameContainer');
+    // Clear any existing content first
+    endgameContainer.innerHTML = '';
       for (let btnKey in endgamePositions) {
         const btnConfig = endgamePositions[btnKey];
-        const btnElem = document.getElementById(btnConfig.id);
-        if (btnElem) {
-          btnElem.style.top = btnConfig.top;
-          btnElem.style.left = btnConfig.left;
-          btnElem.style.width = btnConfig.width;
-          btnElem.style.height = btnConfig.height;
-        }
+         // Create a new button element
+  const btn = document.createElement('button');
+  btn.id = btnConfig.id;
+      
+         btn.style.position = "absolute";
+         btn.style.top = btnConfig.top;
+         btn.style.left = btnConfig.left;
+         btn.style.width = btnConfig.width;
+         btn.style.height = btnConfig.height;
+        
         if (btnConfig.name) {
-            btnElem.innerText = btnConfig.name;
+            btn.innerText = btnConfig.name;
         }
+        if (btnConfig.color) {
+            btn.style.backgroundColor = btnConfig.color;
+    }
+    if (btnConfig.size) {
+        btn.style.fontSize = (btnConfig.size === "large") ? "30px" : "16px";
+    }
         if (btnConfig.hide) {
-            btnElem.style.display = 'none';
+            btn.style.display = 'none';
         }
+         // Attach a click event (customize as needed)
+      btn.addEventListener('click', function() {
+        logEndgameAction(btnConfig.name || btnKey);
+      });
+      // Append the button to the endgame container
+      endgameContainer.appendChild(btn);
       }
 
       // Example of using JSON attribute names:
@@ -788,28 +808,52 @@ fieldIframe.addEventListener("load", function() {
 
 
         function showAdditionalActions() {
-            // Hide initial Teleop buttons and show additional actions
-            document.getElementById('groundPickupButton1').style.display = 'none';
-            document.getElementById('groundPickupButton2').style.display = 'none';
-            document.getElementById('groundPickupButton3').style.display = 'none';
+  const teleopContainer = document.getElementById('teleopContainer');
+  if (!teleopContainer) {
+    console.error("teleopContainer not found!");
+    return;
+  }
+  
+  // Hide all direct children of the teleop container except the additional actions container.
+  Array.from(teleopContainer.children).forEach(child => {
+    // If the child is not the additional actions container, hide it.
+    if (child.id !== 'additionalActions') {
+      child.style.display = 'none';
+    }
+  });
 
-            document.getElementById('sourceButton').style.display = 'none';
-            document.getElementById('sourceButton2').style.display = 'none';
-            document.getElementById('additionalActions').style.display = 'block';
-        }
+  // Now show the additional actions container.
+  const additional = document.getElementById('additionalActions');
+  if (additional) {
+    additional.style.display = 'block';
+  } else {
+    console.error("additionalActions container not found!");
+  }
+}
 
 
-        function hideAdditionalActions() {
-            // Hide additional actions and show initial Teleop buttons again
-            document.getElementById('additionalActions').style.display = 'none';
-            document.getElementById('groundPickupButton1').style.display = 'inline';
-            document.getElementById('groundPickupButton2').style.display = 'inline';
-            document.getElementById('groundPickupButton3').style.display = 'inline';
+function hideAdditionalActions() {
+  const teleopContainer = document.getElementById('teleopContainer');
+  if (!teleopContainer) {
+    console.error("teleopContainer not found!");
+    return;
+  }
+  
+  // Hide the additional actions container.
+  const additional = document.getElementById('additionalActions');
+  if (additional) {
+    additional.style.display = 'none';
+  }
 
-            document.getElementById('sourceButton').style.display = 'inline';
-            document.getElementById('sourceButton2').style.display = 'inline';
+  // Show all children of teleopContainer except the additional actions container.
+  Array.from(teleopContainer.children).forEach(child => {
+    if (child.id !== 'additionalActions') {
+      // Depending on your styling, you might want 'inline-block' or 'block'
+      child.style.display = 'inline-block';
+    }
+  });
+}
 
-        }
 
         function logTeleopAction(action) {
             const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData'));
