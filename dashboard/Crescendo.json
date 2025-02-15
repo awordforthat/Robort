@@ -43,7 +43,8 @@
           "height": "120px",
           "name": "Ground Pickup 1",
           "color": "green",
-          "size": "large"
+          "size": "large",
+          "actionType": "pickup"
         },
       "groundPickupButton2": {
     "id": "groundPickupButton2",
@@ -53,7 +54,8 @@
     "height": "120px",
     "name": "Ground Pickup 2",
     "color": "green",
-    "size": "large"
+    "size": "large",
+    "actionType": "pickup"
   },
   "groundPickupButton3": {
     "id": "groundPickupButton3",
@@ -63,7 +65,8 @@
     "height": "120px",
     "name": "Ground Pickup 3",
     "color": "green",
-    "size": "large"
+    "size": "large",
+    "actionType": "pickup"
   },
  
   "sourceButton": {
@@ -74,7 +77,8 @@
     "height": "195px",
     "name": "Source BLUE",
     "color": "blue",
-    "size": "large"
+    "size": "large",
+    "actionType": "pickup"
   },
   "sourceButton2": {
     "id": "sourceButton2",
@@ -84,7 +88,8 @@
     "height": "195px",
     "name": "Source RED",
     "color": "red",
-    "size": "large"
+    "size": "large",
+   "actionType": "pickup"
   }
 },
 "additionalActions": {

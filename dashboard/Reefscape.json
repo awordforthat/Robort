@@ -102,73 +102,72 @@
     "size": "large"
   }},
       "endgame": {
-        "StageRightBLUE": {
-          "id": "StageRightBLUE",
-          "top": "470px",
-          "left": "20px",
-          "width": "200px",
-          "height": "200px",
-          "name": "Stage Right BLUE",
-          "color": "blue",
-          "size": "large"
-        },
-        "StageLeftBLUE": {
-          "id": "StageLeftBLUE",
-          "top": "260px",
-          "left": "20px",
-          "width": "200px",
-          "height": "200px",
-          "name": "Stage Left BLUE",
-          "color": "blue",
-          "size": "large"
-        },
-        "CenterStageBLUE": {
-          "id": "CenterStageBLUE",
+        "BargeBackBLUE": {
+          "id": "BargeBackBLUE",
           "top": "365px",
           "left": "230px",
           "width": "200px",
           "height": "200px",
-          "name": "Center Stage BLUE",
+          "name": "Barge Back BLUE",
           "color": "blue",
           "size": "large"
         },
-        "StageRightRED": {
-          "id": "StageRightRED",
+        "BargeCenterBLUE": {
+          "id": "BargeCenterBLUE",
+          "top": "470px",
+          "left": "20px",
+          "width": "200px",
+          "height": "200px",
+          "name": "Barge Center BLUE",
+          "color": "blue",
+          "size": "large"
+        },
+        "BargeFrontBLUE": {
+          "id": "BargeFrontBLUE",
+          "top": "260px",
+          "left": "20px",
+          "width": "200px",
+          "height": "200px",
+          "name": "Barge Front BLUE",
+          "color": "blue",
+          "size": "large"
+        },
+        "BargeBackRED": {
+          "id": "BargeBackRED",
           "top": "150px",
           "left": "230px",
           "width": "200px",
           "height": "200px",
-          "name": "Stage Right RED",
+          "name": "Barge Back RED",
           "color": "red",
           "size": "large"
         },
-        "StageLeftRED": {
-          "id": "StageLeftRED",
+        "BargeCenterRED": {
+          "id": "BargeCenterRED",
           "top": "-60px",
           "left": "230px",
           "width": "200px",
           "height": "200px",
-          "name": "Stage Left RED",
+          "name": "Barge Center RED",
           "color": "red",
           "size": "large"
         },
-        "CenterStageRED": {
-          "id": "CenterStageRED",
+        "BargeFrontRED": {
+          "id": "BargeFrontRED",
           "top": "50px",
           "left": "20px",
           "width": "200px",
           "height": "200px",
-          "name": "Center Stage RED",
+          "name": "Barge Front RED",
           "color": "red",
           "size": "large"
         }
       },
       "endgameOutcome": {
         "Park":    { "id": "outcomePark", "name": "Park", "top": "0px", "left": "0px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
-        "Climb":   { "id": "outcomeClimb", "name": "Climb", "top": "0px", "left": "130px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
-        "Harmony": { "id": "outcomeHarmony", "name": "Harmony", "top": "60px", "left": "0px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
-        "Trap":    { "id": "outcomeTrap", "name": "Trap", "top": "60px", "left": "130px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
-        "None":    { "id": "outcomeNone", "name": "None", "top": "120px", "left": "65px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" }
+        "Hang Shallow":   { "id": "outcomeShallow", "name": "Shallow", "top": "0px", "left": "130px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
+        "Hang Deep": { "id": "outcomeDeep", "name": "Deep", "top": "60px", "left": "0px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" },
+        "None":    { "id": "outcomeNone", "name": "None", "top": "60px", "left": "130px", "width": "120px", "height": "50px", "color": "blue", "size": "medium" }
       },
       "addtop": -10
     },
