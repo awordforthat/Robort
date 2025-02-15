@@ -53,7 +53,15 @@
             display: flex;
             margin: 20px;
         }
-
+        #field_image_endgame {
+            background-image: url("images/crescendo_feild.png");
+            background-size: contain;
+            border: 1px solid #000;
+            width: 1152px;
+            height: 498px;
+            display: flex;
+            margin: 20px;
+        }
         #notesContainer .note-btn {
             /* display: inline;  */
             background-color: rgba(0, 200, 150, 0.5);
@@ -334,8 +342,8 @@
             <h1>E</h1>
         </div>
 
-        <div id="field_image">
-            <div class="endgame">
+        <div id="field_image_endgame">
+            <div class="endgame" id="endgame">
                 <button id="StageRightBLUE" style="font-size:20px; opacity: 60%;" onclick="logEndgameAction('Stage Right BLUE')">Stage Right</button>
                 <button id="StageLeftBLUE"style="font-size:20px; opacity: 60%;" onclick="logEndgameAction('Stage Left BLUE')">Stage Left</button>
                 <button id="CenterStageBLUE"style="font-size:20px; opacity: 60%;" onclick="logEndgameAction('Center Stage BLUE')">Center Stage</button>
@@ -349,6 +357,11 @@
     </div>
 
     <script>
+ var compOption = localStorage.getItem('compOption');
+        if (compOption != ('Crescendo')) {
+            compOption = 'Reefscape';
+        }
+        const configPath = `dashboard/${compOption}.json`;
 
 
 
@@ -532,6 +545,23 @@
         //     };
         //     fileReader.readAsDataURL(event.target.files[0]);
         // });
+
+// Custom JSON Configuration
+        fetch(configPath)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(config => {
+      const autoCanvas = document.getElementById("field_image_auto");
+      const teleopCanvas = document.getElementById("field_image");
+      const endgameCanvas = document.getElementById("field_image_endgame");
+    autoCanvas.style.backgroundImage = `url('${config.fieldImage}')`;
+    teleopCanvas.style.backgroundImage = `url('${config.fieldImage}')`;
+    endgameCanvas.style.backgroundImage = `url('${config.fieldImage}')`;
+    });
 
         function loadJsonData(filePath) {
     fetch(filePath)
