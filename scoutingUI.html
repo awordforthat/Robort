@@ -546,6 +546,7 @@ fieldIframe.addEventListener("load", function() {
       const teleopButtonsContainer = document.getElementById('teleopButtons');
 // Clear only the teleop buttons container
 teleopButtonsContainer.innerHTML = '';
+
       for (let btnKey in teleopPositions) {
         const btnConfig = teleopPositions[btnKey];
         // Create a new button element
@@ -574,7 +575,7 @@ teleopButtonsContainer.innerHTML = '';
         logAction(btnConfig.name || btnKey);
       });
       // Append the button to the teleop container
-      teleopContainer.appendChild(btn);
+      teleopButtonsContainer.appendChild(btn);
       }
       // Set Endgame button positions
       const endgamePositions = config.buttonPositions.endgame;
@@ -808,21 +809,12 @@ teleopButtonsContainer.innerHTML = '';
 
 
         function showAdditionalActions() {
-  const teleopContainer = document.getElementById('teleopContainer');
-  if (!teleopContainer) {
-    console.error("teleopContainer not found!");
-    return;
-  }
-  
-  // Hide all direct children of the teleop container except the additional actions container.
-  Array.from(teleopContainer.children).forEach(child => {
-    // If the child is not the additional actions container, hide it.
-    if (child.id !== 'additionalActions') {
-      child.style.display = 'none';
-    }
+  // Hide all dynamic teleop buttons
+  const teleopButtons = document.getElementById('teleopButtons');
+  Array.from(teleopButtons.children).forEach(child => {
+    child.style.display = 'none';
   });
-
-  // Now show the additional actions container.
+  // Show the additional actions container
   const additional = document.getElementById('additionalActions');
   if (additional) {
     additional.style.display = 'block';
@@ -831,26 +823,16 @@ teleopButtonsContainer.innerHTML = '';
   }
 }
 
-
 function hideAdditionalActions() {
-  const teleopContainer = document.getElementById('teleopContainer');
-  if (!teleopContainer) {
-    console.error("teleopContainer not found!");
-    return;
-  }
-  
-  // Hide the additional actions container.
+  // Hide the additional actions container
   const additional = document.getElementById('additionalActions');
   if (additional) {
     additional.style.display = 'none';
   }
-
-  // Show all children of teleopContainer except the additional actions container.
-  Array.from(teleopContainer.children).forEach(child => {
-    if (child.id !== 'additionalActions') {
-      // Depending on your styling, you might want 'inline-block' or 'block'
-      child.style.display = 'inline-block';
-    }
+  // Show all dynamic teleop buttons again
+  const teleopButtons = document.getElementById('teleopButtons');
+  Array.from(teleopButtons.children).forEach(child => {
+    child.style.display = 'inline-block'; // or 'block' based on your desired layout
   });
 }
 
