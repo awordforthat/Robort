@@ -537,7 +537,8 @@ teleopButtonsContainer.innerHTML = '';
         // Create a new button element
   const btn = document.createElement('button');
   btn.id = btnConfig.id;
-       
+  btn.dataset.actionType = btnConfig.actionType;
+
   btn.style.position = "absolute";
           btn.style.top = btnConfig.top;
           btn.style.left = btnConfig.left;
@@ -557,8 +558,11 @@ teleopButtonsContainer.innerHTML = '';
             btn.style.display = 'none';
         }
         btn.addEventListener('click', function() {
-        logAction(btnConfig.name || btnKey);
-      });
+  const act = btnConfig.name || btnKey;
+  const type = btnConfig.actionType || 'shot';
+  logAction(act, type);
+});
+
       // Append the button to the teleop container
       teleopButtonsContainer.appendChild(btn);
       }
@@ -851,37 +855,25 @@ for (let outcomeKey in endgameOutcomeConfig) {
 }
 
 
-        function logAction(action) {
-            const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData'));
+       function logAction(action, actionType) {
+  const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData'));
 
-            // Check if the action is a pickup (Ground Pickup or Source)
-            if (action === 'Ground Pickup' || action === 'Source BLUE' || action === 'Source RED' || action === 'Ground Pickup 1' || action === 'Ground Pickup 2' || action === 'Ground Pickup 3') {
-                // Store the pickup action directly to teleopActions with a placeholder for shot/place
-                scoutingData.teleopActions.push({ pickup: action, shot_place: null });
+  if (actionType === 'pickup') {
+    scoutingData.teleopActions.push({ pickup: action, shot_place: null });
+    scoutingData.currentActionIndex = scoutingData.teleopActions.length - 1;
+    showAdditionalActions();
+  } else {
+    if (typeof scoutingData.currentActionIndex !== 'undefined') {
+      scoutingData.teleopActions[scoutingData.currentActionIndex].shot_place = action;
+      delete scoutingData.currentActionIndex;
+      hideAdditionalActions();
+    }
+  }
 
-                // Temporarily store the index of this action to link with its corresponding shot/place
-                scoutingData.currentActionIndex = scoutingData.teleopActions.length - 1;
+  sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
+  console.log(action + ' action logged.');
+}
 
-                // Show additional options for what happens after the pickup
-                showAdditionalActions();
-            } else {
-                // If it's a shot/place action (Speaker, Amp, Pass), pair it with the last recorded pickup
-                if (typeof scoutingData.currentActionIndex !== 'undefined') {
-                    // Access the current action object and update it with the shot/place action
-                    scoutingData.teleopActions[scoutingData.currentActionIndex].shot_place = action;
-
-                    // Clear the temporary index after updating to prepare for the next series of actions
-                    delete scoutingData.currentActionIndex;
-
-                    // After logging a shot/place, revert to showing the initial pickup options
-                    hideAdditionalActions();
-                }
-            }
-
-            // Save the updated scouting data back to sessionStorage
-            sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
-            console.log(action + ' action logged.');
-        }
 
 
         function showAdditionalActions() {

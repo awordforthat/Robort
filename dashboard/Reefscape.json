@@ -35,64 +35,72 @@
         }
       },
       "teleop": {
-        "groundPickupButton1": {
-          "id": "groundPickupButton1",
+        "processor": {
+          "id": "processor",
           "top": "50px",
-          "left": "230px",
+          "left": "10px",
           "width": "200px",
+          "height": "410px",
+          "name": "Algae in Processor",
+          "color": "green",
+          "size": "large",
+          "actionType": "score"
+
+        },
+        "coral": {
+          "id": "coral",
+          "top": "205px",
+          "left": "220px",
+          "width": "130px",
+          "height": "100px",
+          "name": "Coral Score",
+          "color": "green",
+          "size": "large",
+          "actionType": "pickup"
+        }
+        
+},
+"additionalActions": {
+  "coralL1": {
+          "id": "coralL1",
+          "top": "100px",
+          "left": "30px",
+          "width": "130px",
           "height": "120px",
-          "name": "Ground Pickup 1",
+          "name": "Coral Level 1",
           "color": "green",
           "size": "large"
         },
-      "groundPickupButton2": {
-    "id": "groundPickupButton2",
-    "top": "195px",
-    "left": "230px",
-    "width": "200px",
+      "coralL2": {
+    "id": "coralL2",
+    "top": "100px",
+    "left": "170px",
+    "width": "130px",
     "height": "120px",
-    "name": "Ground Pickup 2",
+    "name": "Coral Level 2",
     "color": "green",
     "size": "large"
   },
-  "groundPickupButton3": {
-    "id": "groundPickupButton3",
-    "top": "340px",
-    "left": "230px",
-    "width": "200px",
+  "coralL3": {
+    "id": "coralL3",
+    "top": "245px",
+    "left": "30px",
+    "width": "130px",
     "height": "120px",
-    "name": "Ground Pickup 3",
+    "name": "Coral Level 3",
     "color": "green",
     "size": "large"
   },
- 
-  "sourceButton": {
-    "id": "sourceButton",
-    "top": "50px",
-    "left": "10px",
-    "width": "200px",
-    "height": "195px",
-    "name": "Source BLUE",
-    "color": "blue",
+  "coralL4": {
+    "id": "coralL4",
+    "top": "245px",
+    "left": "170px",
+    "width": "130px",
+    "height": "120px",
+    "name": "Coral Level 4",
+    "color": "green",
     "size": "large"
-  },
-  "sourceButton2": {
-    "id": "sourceButton2",
-    "top": "265px",
-    "left": "10px",
-    "width": "200px",
-    "height": "195px",
-    "name": "Source RED",
-    "color": "red",
-    "size": "large"
-  }
-},
-"additionalActions": {
-  "speaker": { "id": "speaker", "name": "Speaker", "top": "0px", "left": "0px", "width": "200px", "height": "100px", "color": "blue", "size": "large" },
-  "miss":    { "id": "miss", "name": "Miss", "top": "0px", "left": "220px", "width": "200px", "height": "100px", "color": "red", "size": "large" },
-  "amp":     { "id": "amp", "name": "Amp", "top": "110px", "left": "0px", "width": "200px", "height": "100px", "color": "blue", "size": "large" },
-  "pass":    { "id": "pass", "name": "Pass", "top": "110px", "left": "220px", "width": "200px", "height": "100px", "color": "blue", "size": "large" }
-},
+  }},
       "endgame": {
         "StageRightBLUE": {
           "id": "StageRightBLUE",
