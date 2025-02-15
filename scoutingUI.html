@@ -415,14 +415,6 @@
     
         <div id="teleopButtons"></div>
         <div id="additionalActions" style="display: none;">
-            <button id="speaker" style="font-size:30px; position:absolute;  opacity: 0.6;"
-                onclick="logAction('Speaker')">Speaker</button>
-            <button id="miss" style="font-size:30px; position:absolute;  opacity: 0.9;"
-                onclick="logAction('Miss')">Miss</button>
-            <button id="amp" style="font-size:30px; position:absolute;  opacity: 0.6;"
-                onclick="logAction('Amp')">Amp</button>
-            <button id="pass" style="font-size:30px; position:absolute; opacity: 0.6;"
-                onclick="logAction('Pass')">Pass</button>
         </div>
 
         <div id="endgameContainer" style="display: none; text-align: center;">
@@ -436,13 +428,6 @@
             <button id="CenterStageRED" style="font-size:20px; position:absolute;  opacity: 0.6;" onclick="logEndgameAction('Center Stage RED')">Center Stage</button> -->
 
             <div id="endgameOutcome" style="width:600px; position:absolute; top: 620px; left: 450px; display: none; text-align: center;">
-                <button style="background-color: blue;" onclick="saveEndgameOutcome('Park')">Park</button>
-                <button style="background-color: blue;" onclick="saveEndgameOutcome('Climb')">Climb</button>
-                <button style="background-color: blue;" onclick="saveEndgameOutcome('Harmony')">Harmony</button>
-                <button style="background-color: blue;" onclick="saveEndgameOutcome('Trap')">Trap</button>
-                <button style="background-color: blue;" onclick="saveEndgameOutcome('None')">None</button>
-
-
             </div>
         </div>
 
@@ -577,11 +562,55 @@ teleopButtonsContainer.innerHTML = '';
       // Append the button to the teleop container
       teleopButtonsContainer.appendChild(btn);
       }
+// Create dynamic additional actions
+const additionalActionsConfig = config.buttonPositions.additionalActions;
+const additionalActionsContainer = document.getElementById('additionalActions');
+// Clear the container in case it has old content
+additionalActionsContainer.innerHTML = '';
+
+for (let actionKey in additionalActionsConfig) {
+  const actionConfig = additionalActionsConfig[actionKey];
+  const btn = document.createElement('button');
+  btn.id = actionConfig.id;
+  btn.style.position = "absolute";
+  btn.style.top = actionConfig.top;
+  btn.style.left = actionConfig.left;
+  btn.style.width = actionConfig.width;
+  btn.style.height = actionConfig.height;
+  
+  if (actionConfig.name) {
+    btn.innerText = actionConfig.name;
+  }
+  if (actionConfig.color) {
+    btn.style.backgroundColor = actionConfig.color;
+  }
+  if (actionConfig.size) {
+    btn.style.fontSize = (actionConfig.size === "large") ? "30px" : "16px";
+  }
+  if (actionConfig.hide) {
+    btn.style.display = 'none';
+  }
+  
+  // Attach an event listener (using logAction as an example)
+  btn.addEventListener('click', function() {
+    console.log("Additional action clicked:", actionConfig.name || actionKey);
+    logAction(actionConfig.name || actionKey);
+  });
+  
+  additionalActionsContainer.appendChild(btn);
+}
+
       // Set Endgame button positions
       const endgamePositions = config.buttonPositions.endgame;
       const endgameContainer = document.getElementById('endgameContainer');
     // Clear any existing content first
-    endgameContainer.innerHTML = '';
+    const endgameOutcome = document.getElementById('endgameOutcome');
+if (endgameOutcome) {
+  // Remove the outcome element temporarily
+  endgameContainer.removeChild(endgameOutcome);
+}
+endgameContainer.innerHTML = ''; // Clears dynamic buttons
+
       for (let btnKey in endgamePositions) {
         const btnConfig = endgamePositions[btnKey];
          // Create a new button element
@@ -613,7 +642,50 @@ teleopButtonsContainer.innerHTML = '';
       // Append the button to the endgame container
       endgameContainer.appendChild(btn);
       }
+      if (endgameOutcome) {
+  // Reappend the outcome container after clearing
+  endgameContainer.appendChild(endgameOutcome);
+}
 
+// Create dynamic endgame outcome buttons
+const endgameOutcomeConfig = config.buttonPositions.endgameOutcome;
+const endgameOutcomeContainer = document.getElementById('endgameOutcome');
+
+// Clear any existing content
+endgameOutcomeContainer.innerHTML = '';
+
+for (let outcomeKey in endgameOutcomeConfig) {
+  const outcomeConfig = endgameOutcomeConfig[outcomeKey];
+  const btn = document.createElement('button');
+  btn.id = outcomeConfig.id;
+  btn.style.position = "absolute";
+  btn.style.top = outcomeConfig.top;
+  btn.style.left = outcomeConfig.left;
+  btn.style.width = outcomeConfig.width;
+  btn.style.height = outcomeConfig.height;
+  
+  if (outcomeConfig.name) {
+    btn.innerText = outcomeConfig.name;
+  }
+  if (outcomeConfig.color) {
+    btn.style.backgroundColor = outcomeConfig.color;
+  }
+  if (outcomeConfig.size) {
+    // Adjust font size or styling based on a "medium" size or similar
+    btn.style.fontSize = (outcomeConfig.size === "large") ? "30px" : (outcomeConfig.size === "medium") ? "20px" : "16px";
+  }
+  if (outcomeConfig.hide) {
+    btn.style.display = 'none';
+  }
+  
+  // Attach event listener to save the outcome
+  btn.addEventListener('click', function() {
+    console.log("Endgame outcome selected:", outcomeConfig.name || outcomeKey);
+    saveEndgameOutcome(outcomeConfig.name || outcomeKey);
+  });
+  
+  endgameOutcomeContainer.appendChild(btn);
+}
       // Example of using JSON attribute names:
       // const matchNumberKey = config.jsonAttributes.matchNumber;
       // Then, when storing data, you can do something like:
@@ -763,17 +835,21 @@ teleopButtonsContainer.innerHTML = '';
         }
 
         function startTeleop() {
-            // Hide all note buttons and show Teleop actions
-            document.getElementById('field').style.display = "none"
-            document.getElementById('notesContainer').style.display = 'none';
-            document.getElementById('noteOutcome').style.display = 'none'; // Hide outcomes if visible
-            document.getElementById('teleopContainer').style.display = 'block';
+  // Hide field and note containers
+  document.getElementById('field').style.display = "none";
+  document.getElementById('notesContainer').style.display = 'none';
+  document.getElementById('noteOutcome').style.display = 'none';
+  document.getElementById('teleopContainer').style.display = 'block';
+  
+  // Retrieve scoutingData from sessionStorage, or initialize if it doesn't exist
+  let scoutingData = JSON.parse(sessionStorage.getItem('scoutingData') || '{}');
+  
+  // Initialize teleopActions array if it doesn't exist
+  scoutingData.teleopActions = [];
+  
+  sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
+}
 
-
-            const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData'));
-            scoutingData.teleopActions = [];
-            sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
-        }
 
         function logAction(action) {
             const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData'));
@@ -818,8 +894,6 @@ teleopButtonsContainer.innerHTML = '';
   const additional = document.getElementById('additionalActions');
   if (additional) {
     additional.style.display = 'block';
-  } else {
-    console.error("additionalActions container not found!");
   }
 }
 
@@ -832,9 +906,10 @@ function hideAdditionalActions() {
   // Show all dynamic teleop buttons again
   const teleopButtons = document.getElementById('teleopButtons');
   Array.from(teleopButtons.children).forEach(child => {
-    child.style.display = 'inline-block'; // or 'block' based on your desired layout
+    child.style.display = 'inline-block';
   });
 }
+
 
 
         function logTeleopAction(action) {
@@ -870,16 +945,16 @@ function hideAdditionalActions() {
         }
 
         function logEndgameAction(action) {
-            // Store the endgame action and show the secondary buttons
-            const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData')) || {};
-            scoutingData.endgameAction = action;
-            sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
+  // Store the endgame action in scoutingData
+  const scoutingData = JSON.parse(sessionStorage.getItem('scoutingData')) || {};
+  scoutingData.endgameAction = action;
+  sessionStorage.setItem('scoutingData', JSON.stringify(scoutingData));
 
-            console.log(action + ' endgame action logged.');
+  console.log(action + ' endgame action logged.');
 
-            // Show the secondary endgame outcome buttons
-            document.getElementById('endgameOutcome').style.display = 'block';
-        }
+  // Show the dynamic endgame outcome container
+  document.getElementById('endgameOutcome').style.display = 'block';
+}
 
         function saveEndgameOutcome(outcome) {
             // Retrieve the endgame action and append the outcome to it
