@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firestore Demo</title>
+    <script src="./firestore.js" type="module"></script>
+  </head>
+
+  <body>
+    <h1>Firestore Demo</h1>
+    <div>
+      This example shows how to interact with a Firestore database in the cloud.
+    </div>
+    <div>
+      Importing the firestore.js file creates a connection to Firestore and
+      starts polling a collection called <b>scouting-data</b>.
+    </div>
+    <br />
+    <br />
+    <table>
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>Can Climb?</th>
+          <th>Can Score L0?</th>
+          <th>Can Score L1?</th>
+          <th>Can Score L2?</th>
+          <th>Can Score L3?</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </body>
+</html>
