@@ -2,6 +2,9 @@ import {
   getFirestore,
   collection,
   getDocs,
+  addDoc,
+  doc,
+  setDoc,
 } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -11,6 +14,9 @@ export default class FirestoreConnection {
     this.db = null;
     this.isConnected = false;
     this.unsubscribes = [];
+    this.initialize.bind(this);
+    this.addData.bind(this);
+    this.disconnect.bind(this);
   }
 
   // Initialize Firestore connection with credentials
@@ -44,7 +50,7 @@ export default class FirestoreConnection {
   }
 
   // Poll a Firestore collection for changes
-  pollCollection(collectionName, callback, interval = 10000) {
+  pollCollection(collectionName, callback, interval = 1000) {
     if (!this.isConnected) {
       console.log("Not connected to Firestore!");
       return;
@@ -55,7 +61,9 @@ export default class FirestoreConnection {
     const poll = () => {
       getDocs(colRef) // Fetch documents from the collection
         .then((snapshot) => {
-          const data = snapshot.docs.map((doc) => doc.data());
+          const data = snapshot.docs.map((doc) => {
+            return { id: doc.id, data: doc.data() };
+          });
           callback(data);
         })
         .catch((error) => {
@@ -71,5 +79,14 @@ export default class FirestoreConnection {
   stopPolling() {
     this.unsubscribes.forEach((unsubscribe) => unsubscribe());
     this.unsubscribes = [];
+  }
+
+  async addData(collectionName, data, docId) {
+    if (docId) {
+      const docRef = doc(this.db, collectionName, docId);
+      return await setDoc(docRef, data, { merge: true });
+    } else {
+      return await addDoc(collection(this.db, collectionName), data); // addDoc auto-generates an ID
+    }
   }
 }
